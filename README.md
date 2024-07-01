@@ -9,7 +9,6 @@ Welcome to **Listify**, a simple and efficient task manager app built using Vite
 4. [Running the Application](#running-the-application)
 5. [Project Structure](#project-structure)
 6. [Backend API](#backend-api)
-7. [License](#license)
 
 ## Introduction
 Listify is a modern task manager application designed to help you manage your tasks efficiently. Built with Vite and React.js, Listify offers a fast and responsive user experience. The app uses a backend API to connect to a database for storing your tasks.
