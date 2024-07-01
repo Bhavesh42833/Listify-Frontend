@@ -87,8 +87,8 @@ listify/
 The backend API is responsible for connecting to the database and managing tasks. Make sure your backend server is running and accessible. You can configure the API endpoint in the application settings.
 
 ### API Endpoints
-- **GET /tasks**: Retrieve all tasks
-- **POST /tasks**: Create a new task
+- **GET /tasks/myTask**: Retrieve all tasks
+- **POST /tasks/create**: Create a new task
 - **PUT /tasks/:id**: Update an existing task
 - **DELETE /tasks/:id**: Delete a task
 
