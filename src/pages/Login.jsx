@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { Link, Navigate } from "react-router-dom";
 import { Context, server } from "../main";
@@ -9,10 +9,13 @@ const Login = () => {
     useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true); // New state to handle initial check
 
-   useEffect(() => {
-     if(isAuthenticated) return <Navigate to={"/"} />
-   },[isAuthenticated]);
+  useEffect(() => {
+    // Simulate an authentication check (if applicable)
+    setTimeout(() => setIsCheckingAuth(false), 500); // Delay to ensure auth state is loaded
+  }, []);
+
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -20,27 +23,29 @@ const Login = () => {
     try {
       const response = await axios.post(
         `${server}/users/login`,
+        { email, password },
         {
-          email,
-          password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
-      const {data} = response;
+      const { data } = response;
       toast.success(data.message);
       setIsAuthenticated(true);
-      setLoading(false);
     } catch (error) {
-      toast.error(error.response.data.message);
-      setLoading(false);
+      toast.error(error.response?.data?.message || "Login failed");
       setIsAuthenticated(false);
+    } finally {
+      setLoading(false);
     }
   };
+
+  console.log("Auth Status:", isAuthenticated, "Loading:", loading);
+
+  // Prevent rendering until authentication is checked
+  if (isCheckingAuth || loading) return <p className="loader">Loading...</p>;
+
+  if (isAuthenticated) return <Navigate to="/" />;
 
   return (
     <div className="login">
@@ -61,7 +66,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button disabled={loading} type="submit">
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
           <h4>Or</h4>
           <Link to="/register">Sign Up</Link>
