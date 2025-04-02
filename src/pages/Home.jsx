@@ -4,11 +4,9 @@ import { Context, server } from "../main";
 import { toast } from "react-hot-toast";
 import TodoItem from "../components/TodoItem";
 import { Navigate } from "react-router-dom";
+import "../styles/app.scss";
 
 const Home = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState([]); // Initialize tasks as an empty array
   const [refresh, setRefresh] = useState(false);
 
@@ -16,14 +14,14 @@ const Home = () => {
 
   const updateHandler = async (id) => {
     try {
-      const { data } = await axios.put(
+      const response = await axios.put(
         `${server}/tasks/${id}`,
         {},
         {
           withCredentials: true,
         }
       );
-
+      const {data}=response;
       toast.success(data.message);
       setRefresh((prev) => !prev);
     } catch (error) {
@@ -44,35 +42,6 @@ const Home = () => {
     }
   };
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      const { data } = await axios.post(
-        `${server}/tasks/create`,
-        {
-          title,
-          description,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      setTitle("");
-      setDescription("");
-      toast.success(data.message);
-      setLoading(false);
-      setRefresh((prev) => !prev);
-    } catch (error) {
-      toast.error(error.response.data.message);
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     axios
       .get(`${server}/tasks/mytask`, {
@@ -88,45 +57,54 @@ const Home = () => {
 
   if (!isAuthenticated) return <Navigate to={"/login"} />;
 
+  // Filter tasks based on completion status
+  const pendingTasks = tasks.filter((task) => !task.IsCompleted);
+  const completedTasks = tasks.filter((task) => task.IsCompleted);
+
   return (
-    <div className="container">
-      <div className="login">
-        <section>
-          <form onSubmit={submitHandler}>
-            <input
-              type="text"
-              placeholder="Title"
-              required
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Description"
-              required
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-
-            <button disabled={loading} type="submit">
-              Add Task
-            </button>
-          </form>
-        </section>
-      </div>
-
+    <div>
       <section className="todosContainer">
-        {tasks.map((i) => (
-          <TodoItem
-            title={i.title}
-            description={i.description}
-            isCompleted={i.isCompleted}
-            updateHandler={updateHandler}
-            deleteHandler={deleteHandler}
-            id={i._id}
-            key={i._id}
-          />
-        ))}
+        <div className="taskSection pendingTasks">
+          <h2>Pending Tasks</h2>
+          {pendingTasks.length > 0 ? (
+            pendingTasks.map((task) => (
+              <TodoItem
+                title={task.title}
+                description={task.description}
+                IsCompleted={task.IsCompleted}
+                updateHandler={updateHandler}
+                deleteHandler={deleteHandler}
+                id={task._id}
+                time_tag={task.time_tag}
+                deadline={task.deadline}
+                key={task._id}
+              />
+            ))
+          ) : (
+            <p>No pending tasks</p>
+          )}
+        </div>
+
+        <div className="taskSection completedTasks">
+          <h2>Completed Tasks</h2>
+          {completedTasks.length > 0 ? (
+            completedTasks.map((task) => (
+              <TodoItem
+                title={task.title}
+                description={task.description}
+                IsCompleted={task.IsCompleted}
+                updateHandler={updateHandler}
+                deleteHandler={deleteHandler}
+                time_tag={task.time_tag}
+                deadline={task.deadline}
+                id={task._id}
+                key={task._id}
+              />
+            ))
+          ) : (
+            <p>No completed tasks</p>
+          )}
+        </div>
       </section>
     </div>
   );

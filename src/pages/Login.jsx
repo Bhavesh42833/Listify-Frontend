@@ -15,7 +15,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(
+      const response = await axios.post(
         `${server}/users/login`,
         {
           email,
@@ -28,7 +28,7 @@ const Login = () => {
           withCredentials: true,
         }
       );
-
+      const {data} = response;
       toast.success(data.message);
       setIsAuthenticated(true);
       setLoading(false);
@@ -38,7 +38,7 @@ const Login = () => {
       setIsAuthenticated(false);
     }
   };
-
+   console.log(isAuthenticated);
   if (isAuthenticated) return <Navigate to={"/"} />;
 
   return (

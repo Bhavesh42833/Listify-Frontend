@@ -1,0 +1,79 @@
+/* Add.css */
+
+.add-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    background-color: var(--bg-color);  
+  }
+  
+  .add-section {
+    background: var(--card-bg);
+    padding: 40px; 
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 700px; 
+    max-height: 80vh;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 12px; 
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: var(--card-bg);
+    color:var(--text-color);
+  }
+  
+  .select-time {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color:var(--text-color);
+    background-color: var(--card-bg);
+  }
+  
+  .date-stack {
+    margin-bottom: 20px;
+    font-size: 14px;
+    background-color: var(--card-bg);
+    color:var(--text-color);
+
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 14px; 
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .submit-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  h4 {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  h4 a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  h4 a:hover {
+    text-decoration: underline;
+  }
+  

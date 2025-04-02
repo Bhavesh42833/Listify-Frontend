@@ -99,3 +99,39 @@ $shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     outline: none;
   }
 }
+
+:root {
+  // Light Mode Colors
+  --bg-color: #f4f7fc;
+  --text-color: #333;
+  --card-bg: #fff;
+  --task-pending-bg: #fff3e0;
+  --task-completed-bg: #e8f5e9;
+  --task-border-pending: #ff9800;
+  --task-border-completed: #4caf50;
+  --input-bg: #fff;
+  --input-border: #ccc;
+  --input-label: #555;
+}
+
+[data-theme="dark"] {
+  // Dark Mode Colors
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --card-bg: #1e1e1e;
+  --task-pending-bg: #3a2f17;
+  --task-completed-bg: #213d24;
+  --task-border-pending: #ffb74d;
+  --task-border-completed: #66bb6a;
+  --input-bg: #1e1e1e;
+  --input-border: #fff;
+  --input-label: #bbb;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
