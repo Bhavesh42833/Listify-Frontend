@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link, Navigate } from "react-router-dom";
 import { Context, server } from "../main";
@@ -10,6 +10,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+   useEffect(() => {
+     if(isAuthenticated) return <Navigate to={"/"} />
+   },[isAuthenticated]);
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -38,8 +41,6 @@ const Login = () => {
       setIsAuthenticated(false);
     }
   };
-   console.log(isAuthenticated);
-  if (isAuthenticated) return <Navigate to={"/"} />;
 
   return (
     <div className="login">
