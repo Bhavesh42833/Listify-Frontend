@@ -13,7 +13,7 @@ const Login = () => {
 
   useEffect(() => {
     // Simulate an authentication check (if applicable)
-    setTimeout(() => setIsCheckingAuth(false), 500); // Delay to ensure auth state is loaded
+    setTimeout(() => setIsCheckingAuth(false), 1000); // Delay to ensure auth state is loaded
   }, []);
 
   const submitHandler = async (e) => {
